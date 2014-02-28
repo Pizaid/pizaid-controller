@@ -52,3 +52,7 @@ lvcreate -n Pizaid-LV-${VNAME} -l 100%FREE Pizaid-VG-${VNAME}
 
 # format pertation with ext4
 mkfs -t ext4 /dev/Pizaid-VG-${VNAME}/Pizaid-LV-${VNAME}
+
+# crate directory and mout
+mkdir -p /media/Pizaid-${VNAME}
+mount /dev/Pizaid-VG-${VNAME}/Pizaid-LV-${VNAME} /media/Pizaid-${VNAME}
