@@ -1,6 +1,18 @@
 #! /bin/bash
 # create a Pizaid-volume
 
+# check argument
+CMDNAME=`basename $0`
+if [ $# != 2 ]; then
+	echo "Usage: $CMDNAME PizaidVolumeName PhysicalDevicePath"
+	exit 1
+fi
+
+# TODO: check VolumeName
+VNAME=$1 #VolumeName
+DPATH=$2 #DevicePath
+
+
 # check machine
 if [ `hostname` != "raspberrypi" ]; then
 	echo "This machine is not raspberrypi"
@@ -13,18 +25,6 @@ if [ "` id | grep root`" = "" ]; then
 	echo "Please re-run as super user"
 	exit 1
 fi
-
-
-# check argument
-CMDNAME=`basename $0`
-if [ $# != 2 ]; then
-	echo "Usage: $CMDNAME PizaidVolumeName PhysicalDevicePath"
-	exit 1
-fi
-
-# TODO: check VolumeName
-VNAME=$1 #VolumeName
-DPATH=$2 #DevicePath
 
 
 # create pertation for volume group
