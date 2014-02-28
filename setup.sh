@@ -15,7 +15,9 @@ fi
 
 echo "start setup of Pizaid-Controller"
 
+
 echo "update and install depend packages"
+
 # update packages before install
 aptitude update
 aptitude upgrade
