@@ -43,25 +43,25 @@ PizaidCreatePV(){
 }
 
 PizaidCreateVG(){
-    vgcreate -s 128m Pizaid-VG ${DPATH}1
+    vgcreate -s 128m ${NAME}-VG ${DPATH}1
 }
 
 PizaidCreateLV(){
-    lvcreate -n Pizaid-LV -l 100%FREE Pizaid-VG
+    lvcreate -n ${NAME}-LV -l 100%FREE ${NAME}-VG
 }
 
 PizaidExtendVG(){
-    vgextend Pizaid-VG ${DPATH}1
+    vgextend ${NAME}-VG ${DPATH}1
 }
 
 PizaidExtendLV(){
-    lvextend -l +100%FREE /dev/Pizaid-VG/Pizaid-LV
+    lvextend -l +100%FREE /dev/${NAME}-VG/${NAME}-LV
 }
 
 PizaidMKFS(){
-    mkfs -t ext4 /dev/Pizaid-VG/Pizaid-LV
+    mkfs -t ext4 /dev/${NAME}-VG/${NAME}-LV
 }
 
 PizaidReSizeFS(){
-    resize2fs /dev/Pizaid-VG/Pizaid-LV
+    resize2fs /dev/${NAME}-VG/${NAME}-LV
 }
