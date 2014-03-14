@@ -42,16 +42,11 @@ PizaidCheckDevicePATH(){
 
 
 PizaidCreatePartition(){
-    fdisk $DPATH << EOF
-o
-n
-p
-1
-
-
-t
-8e
-w
+    parted $DPATH --script << EOF
+mklabel gpt
+mkpart primary 0% 100%
+set 1 lvm on
+quit
 EOF
 }
 
