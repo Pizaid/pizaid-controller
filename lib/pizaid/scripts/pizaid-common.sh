@@ -28,8 +28,8 @@ PizaidCheckVolumeName(){
 }
 
 PizaidCheckDevicePATH(){
-    if [ ! -f $DPATH ]; then
-	    echo "$DPATH is not exist or file"
+    if [ ! -e $DPATH ]; then
+	    echo "$DPATH is not exist"
 	    exit 1
     fi
 
@@ -37,4 +37,48 @@ PizaidCheckDevicePATH(){
 	    echo "$DPATH is invalid ( /dev/sd[a-z] is valid )"
 	    exit 1
     fi
+}
+
+
+
+PizaidCreatePartition(){
+    fdisk $DPATH << EOF
+o
+n
+p
+1
+
+
+t
+8e
+w
+EOF
+}
+
+PizaidCreatePV(){
+    pvcreate ${DPATH}1
+}
+
+PizaidCreateVG(){
+    vgcreate -s 128m Pizaid-VG-${VNAME} ${DPATH}1
+}
+
+PizaidCreateLV(){
+    lvcreate -n Pizaid-LV-${VNAME} -l 100%FREE Pizaid-VG-${VNAME}
+}
+
+PizaidExtendVG(){
+    vgextend Pizaid-VG-${VNAME} ${DPATH}1
+}
+
+PizaidExtendLV(){
+    lvextend -l +100%FREE /dev/Pizaid-VG-${VNAME}/Pizaid-LV-${VNAME}
+}
+
+PizaidMKFS(){
+    mkfs -t ext4 /dev/Pizaid-VG-${VNAME}/Pizaid-LV-${VNAME}
+}
+
+PizaidReSizeFS(){
+    resize2fs /dev/Pizaid-VG-${VNAME}/Pizaid-LV-${VNAME}
 }
