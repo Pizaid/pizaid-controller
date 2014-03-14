@@ -47,3 +47,4 @@ PizaidMKFS
 # crate directory and mout
 mkdir -p /mnt/${NAME}
 mount /dev/${NAME}-VG/${NAME}-LV /mnt/${NAME}
+sudo chown share:share /mnt/${NAME}

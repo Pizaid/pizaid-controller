@@ -25,5 +25,9 @@ aptitude upgrade
 # install lvm and filesisytems packages
 aptitude install lvm2
 
-# # install samba
-# aptitude install samba
+# install samba
+aptitude install samba
+
+adduser share --home /mnt/Pizaid --no-create-home --disabled-password --disabled-login --system
+addgroup share --system
+adduser share share
