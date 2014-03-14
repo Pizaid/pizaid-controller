@@ -10,7 +10,6 @@ if [ $# != 1 ]; then
 	exit 1
 fi
 
-# TODO: check VolumeName
 DPATH=$1 #DevicePath
 
 
