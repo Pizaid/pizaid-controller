@@ -56,7 +56,7 @@ EOF
 }
 
 PizaidCreatePV(){
-    pvcreate ${DPATH}1
+    pvcreate ${DPATH}1 -ff -y
 }
 
 PizaidCreateVG(){
