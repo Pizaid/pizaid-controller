@@ -5,14 +5,12 @@
 
 # check argument
 CMDNAME=`basename $0`
-if [ $# != 2 ]; then
-	echo "Usage: $CMDNAME PizaidVolumeName PhysicalDevicePath"
+if [ $# != 1 ]; then
+	echo "Usage: $CMDNAME PhysicalDevicePath"
 	exit 1
 fi
 
-# TODO: check VolumeName
-VNAME=$1 #VolumeName
-DPATH=$2 #DevicePath
+DPATH=$1 #DevicePath
 
 
 PizaidCheckHostName

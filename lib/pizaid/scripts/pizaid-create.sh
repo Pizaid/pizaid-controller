@@ -5,22 +5,19 @@
 
 # check argument
 CMDNAME=`basename $0`
-if [ $# != 2 ]; then
-	echo "Usage: $CMDNAME PizaidVolumeName PhysicalDevicePath"
+if [ $# != 1 ]; then
+	echo "Usage: $CMDNAME PhysicalDevicePath"
 	exit 1
 fi
 
 # TODO: check VolumeName
-VNAME=$1 #VolumeName
-DPATH=$2 #DevicePath
+DPATH=$1 #DevicePath
 
 
 PizaidCheckHostName
 PizaidCheckUser
 
-PizaidCheckVolumeName
 PizaidCheckDevicePATH
-
 
 PizaidCreatePartition
 PizaidCreatePV
@@ -30,5 +27,5 @@ PizaidMKFS
 
 
 # crate directory and mout
-mkdir -p /media/Pizaid-${VNAME}
-mount /dev/Pizaid-VG-${VNAME}/Pizaid-LV-${VNAME} /media/Pizaid-${VNAME}
+mkdir -p /mnt/Pizaid
+mount /dev/Pizaid-VG/Pizaid-LV /mnt/Pizaid
