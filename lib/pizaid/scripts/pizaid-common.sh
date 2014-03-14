@@ -33,7 +33,7 @@ PizaidCheckDevicePATH(){
 	    exit 1
     fi
 
-    if [ "` echo $DPATH | grep '^/dev/sd[a-z]$' `" ]; then
+    if [ "` echo $DPATH | grep '^/dev/sd[a-z]$' `" = "" ]; then
 	    echo "$DPATH is invalid ( /dev/sd[a-z] is valid )"
 	    exit 1
     fi
