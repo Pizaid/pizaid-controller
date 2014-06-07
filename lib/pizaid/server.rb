@@ -1,4 +1,4 @@
-require 'dbus'
+require_relative 'dbusrunner.rb'
 
 module Pizaid
   module Controller

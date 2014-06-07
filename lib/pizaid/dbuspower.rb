@@ -1,14 +1,17 @@
+# -*- coding: utf-8 -*-
 require 'dbus'
 
 module Pizaid
   module Controller
     class DBusPower < DBus::Object
       dbus_interface "com.pizaid.power.Properties" do
-        dbus_method :Get_battery_parcentage, "out parcent:i" do |name|
-          parcent = 50
-          puts("Get_battery_parcentage: #{parcent}")
-          return parcent
+        # バッテリーの残量 [%]
+        dbus_method :Get_battery_percent, "out percent:i" do |name|
+          percent = 50
+          puts("Get_battery_percentage: #{percent}")
+          return percent
         end
+        # ACアダプタが刺さっているか? (true = 刺さってる)
         dbus_method :Is_ac_plugin, "out plugged:b" do
           plugged = true
           puts("Is_ac_plugin: #{plugged}")
