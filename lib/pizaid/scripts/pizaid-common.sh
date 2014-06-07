@@ -15,25 +15,13 @@ PizaidCheckUser(){
     fi
 }
 
-PizaidCheckVolumeName(){
-    if [ "` echo $VNAME | grep '[^A-Za-z0-9]' `" != "" ]; then
-	    echo "Unacceptable PizaidVolumeName: $VNAME (You can use A-Z,a-z and 0-9)"
-	    exit 1
-    fi
-
-    if [ "` echo $VNAME | grep 'sync'`" != "" ]; then
-	    echo "Unacceptable PizaidVolumeName: $VNAME (can not use "sync" for PizaidVolumeName)"
-	    exit 1
-    fi
-}
-
 PizaidCheckDevicePATH(){
     if [ ! -e $DPATH ]; then
 	    echo "$DPATH is not exist"
 	    exit 1
     fi
 
-    if [ "` echo $DPATH | grep '^/dev/sd[a-z]$' `" ]; then
+    if [ "` echo $DPATH | grep '^/dev/sd[a-z]$' `" = "" ]; then
 	    echo "$DPATH is invalid ( /dev/sd[a-z] is valid )"
 	    exit 1
     fi
@@ -42,43 +30,38 @@ PizaidCheckDevicePATH(){
 
 
 PizaidCreatePartition(){
-    fdisk $DPATH << EOF
-o
-n
-p
-1
-
-
-t
-8e
-w
+    parted $DPATH --script << EOF
+mklabel gpt
+mkpart primary 0% 100%
+set 1 lvm on
+quit
 EOF
 }
 
 PizaidCreatePV(){
-    pvcreate ${DPATH}1
+    pvcreate ${DPATH}1 -ff -y
 }
 
 PizaidCreateVG(){
-    vgcreate -s 128m Pizaid-VG-${VNAME} ${DPATH}1
+    vgcreate -s 128m Pizaid-VG ${DPATH}1
 }
 
 PizaidCreateLV(){
-    lvcreate -n Pizaid-LV-${VNAME} -l 100%FREE Pizaid-VG-${VNAME}
+    lvcreate -n Pizaid-LV -l 100%FREE Pizaid-VG
 }
 
 PizaidExtendVG(){
-    vgextend Pizaid-VG-${VNAME} ${DPATH}1
+    vgextend Pizaid-VG ${DPATH}1
 }
 
 PizaidExtendLV(){
-    lvextend -l +100%FREE /dev/Pizaid-VG-${VNAME}/Pizaid-LV-${VNAME}
+    lvextend -l +100%FREE /dev/Pizaid-VG/Pizaid-LV
 }
 
 PizaidMKFS(){
-    mkfs -t ext4 /dev/Pizaid-VG-${VNAME}/Pizaid-LV-${VNAME}
+    mkfs -t ext4 /dev/Pizaid-VG/Pizaid-LV
 }
 
 PizaidReSizeFS(){
-    resize2fs /dev/Pizaid-VG-${VNAME}/Pizaid-LV-${VNAME}
+    resize2fs /dev/Pizaid-VG/Pizaid-LV
 }
