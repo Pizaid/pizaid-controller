@@ -1,17 +1,16 @@
 #! /bin/bash
 # check disk space of Pizaid-volume
 
-. pizaid-common.sh
-
 NAME="Pizaid"
 PERCENT_FLAG=false
 
 # check argument
-CMDNAME=`basename $0`
 usage_exit() {
-	echo "Usage: $CMDNAME [-S sync] [-p percent] [-s size] [-u use] [-a avail] [-h help]" 1>&2
+	echo "Usage: pizaid-volume [-S sync] [-p percent] [-s size] [-u use] [-a avail] [-h help]" 1>&2
     exit 1
 }
+
+. $(dirname $0)/pizaid-common.sh
 
 MODE="NO"
 
@@ -35,6 +34,11 @@ done
 
 if [ $# != 0 ] ; then
     usage_exit
+fi
+
+if [ ! -e /dev/${NAME} ]; then
+    echo "-1"
+    exit 2
 fi
 
 if [ $MODE == "SIZE" ] ;then
