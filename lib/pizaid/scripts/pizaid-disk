@@ -1,17 +1,14 @@
 #! /bin/bash
-# create a Pizaid-volume
+# create a pizaid-disk
 
-. pizaid-common.sh
-
-NAME="Pizaid"
-
-# check argument
-CMDNAME=`basename $0`
 usage_exit() {
-	echo "Usage: $CMDNAME [-S sync] [-h help] PhysicalDevicePath" 1>&2
+	echo "Usage: pizaid-disk [-S sync] [-h help] PhysicalDevicePath" 1>&2
     exit 1
 }
 
+. $(dirname $0)/pizaid-common.sh
+
+NAME="Pizaid"
 OPT=`getopt -o :Sh -l sync,help -- "$@"`
 if [ $? != 0 ] ; then
     usage_exit
@@ -36,16 +33,24 @@ PizaidCheckUser
 
 PizaidCheckDevicePATH
 
-PizaidCreatePartition
-PizaidCreatePV
-PizaidCreateVG
-PizaidCreateLV
-PizaidMKFS
-
-
-# crate directory and mout
-mkdir -p /mnt/${NAME}
-mount /dev/${NAME}-VG/${NAME}-LV /mnt/${NAME}
-chown share:share /mnt/${NAME}
+if [ ! -e /dev/${NAME} ]; then
+    # create pizaid volume
+    PizaidCreatePartition
+    PizaidCreatePV
+    PizaidCreateVG
+    PizaidCreateLV
+    PizaidMKFS
+    # crate directory and mout
+    mkdir -p /mnt/${NAME}
+    mount /dev/${NAME}-VG/${NAME}-LV /mnt/${NAME}
+    chown share:share /mnt/${NAME}
+else
+    # extend pizaid volume
+    PizaidCreatePartition
+    PizaidCreatePV
+    PizaidExtendVG
+    PizaidExtendLV
+    PizaidReSizeFS
+fi
 
 service samba restart
