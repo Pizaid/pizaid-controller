@@ -36,7 +36,7 @@ if [ $# != 0 ] ; then
     usage_exit
 fi
 
-if [ ! -e /dev/${NAME} ]; then
+if [ ! -e /dev/${NAME}-VG ]; then
     echo "-1"
     exit 2
 fi
