@@ -6,7 +6,7 @@ module Pizaid
     class DBusPower < DBus::Object
       dbus_interface "com.pizaid.power.Properties" do
         # バッテリーの残量 [%]
-        dbus_method :Get_battery_percent, "out percent:i" do |name|
+        dbus_method :Get_battery_percent, "out percent:i" do
           percent = 50
           puts("Get_battery_percentage: #{percent}")
           return percent
