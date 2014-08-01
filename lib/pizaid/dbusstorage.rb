@@ -19,9 +19,9 @@ module Pizaid
           capacity = 0
           case name
           when @names[0]
-            capacity = 1024*1024
+            capacity = `scripts/pizaid-volume --size`
           when @names[1]
-            capacity = 512*1024
+            capacity = `scripts/pizaid-volume -S --size`
           end
           puts("Get_total: #{name}, #{capacity}")
           return capacity
@@ -31,16 +31,16 @@ module Pizaid
           used = 0
           case name
           when @names[0]
-            used = 512*1024
+            used = `scripts/pizaid-volume --use`
           when @names[1]
-            used = 256*1024
+            used = `scripts/pizaid-volume -S --use`
           end
           puts("Get_used: #{name}, #{used}")
           return used
         end
         # ディスクの使用量[%]
         dbus_method :Get_usage_percent, "in name:s, out percent:i" do |name|
-          percent = 50
+          percent = `scripts/pizaid-volume --use -p`
           puts("Get_usage: #{name}, #{percent}")
           return percent
         end

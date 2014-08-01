@@ -33,7 +33,7 @@ PizaidCheckUser
 
 PizaidCheckDevicePATH
 
-if [ ! -e /dev/${NAME} ]; then
+if [ ! -e /dev/${NAME}-VG ]; then
     # create pizaid volume
     PizaidCreatePartition
     PizaidCreatePV
