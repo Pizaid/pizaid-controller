@@ -7,11 +7,13 @@ module Pizaid
       def initialize objname
         super objname
         @names = ["main", "sync"]
+        @script_dir = File.expand_path(File.dirname(__FILE__)) + "/scripts"
       end
       dbus_interface "com.pizaid.storage.Properties" do
         # ディスク名の一覧
         dbus_method :Get_names, "out names:as" do
           puts("Get_names: #{@names}")
+          puts @dir
           return [@names]
         end
         # ディスクの容量[kB]
@@ -19,9 +21,9 @@ module Pizaid
           capacity = 0
           case name
           when @names[0]
-            capacity = `scripts/pizaid-volume --size`
+            capacity = `#{@script_dir}/pizaid-volume --size`.to_i
           when @names[1]
-            capacity = `scripts/pizaid-volume -S --size`
+            capacity = `#{pdir}/scripts/pizaid-volume -S --size`.to_i
           end
           puts("Get_total: #{name}, #{capacity}")
           return capacity
@@ -31,16 +33,22 @@ module Pizaid
           used = 0
           case name
           when @names[0]
-            used = `scripts/pizaid-volume --use`
+            used = `#{@script_dir}/pizaid-volume --use`.to_i
           when @names[1]
-            used = `scripts/pizaid-volume -S --use`
+            used = `#{@script_dir}/pizaid-volume -S --use`.to_i
           end
           puts("Get_used: #{name}, #{used}")
           return used
         end
         # ディスクの使用量[%]
         dbus_method :Get_usage_percent, "in name:s, out percent:i" do |name|
-          percent = `scripts/pizaid-volume --use -p`
+          percent = 0
+          case name
+          when @names[0]
+            percent = `#{@script_dir}/pizaid-volume --use -p`.to_i
+          when @names[1]
+            percent = `#{@script_dir}/pizaid-volume -S --use -p`.to_i
+          end
           puts("Get_usage: #{name}, #{percent}")
           return percent
         end
