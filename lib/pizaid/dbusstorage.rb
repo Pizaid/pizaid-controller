@@ -23,7 +23,7 @@ module Pizaid
           when @names[0]
             capacity = `#{@script_dir}/pizaid-volume --size`.to_i
           when @names[1]
-            capacity = `#{pdir}/scripts/pizaid-volume -S --size`.to_i
+            capacity = `#{@script_dir}/scripts/pizaid-volume -S --size`.to_i
           end
           puts("Get_total: #{name}, #{capacity}")
           return capacity
