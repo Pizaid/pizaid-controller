@@ -59,6 +59,16 @@ module Pizaid
           return synced
         end
       end
+      dbus_interface "com.pizaid.storage.Operations" do
+        dbus_method :Join, "in device:s, in name:s" do |device,name|
+          case name
+          when @names[0]
+            `#{@script_dir}/pizid-disk #{device}`
+          when @names[1]
+            `#{@script_dir}/pizid-disk -S #{device}`
+          end
+        end
+      end
     end
   end
 end
