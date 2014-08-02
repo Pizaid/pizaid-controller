@@ -23,7 +23,7 @@ module Pizaid
           when @names[0]
             capacity = `#{@script_dir}/pizaid-volume --size`.to_i
           when @names[1]
-            capacity = `#{pdir}/scripts/pizaid-volume -S --size`.to_i
+            capacity = `#{@script_dir}/scripts/pizaid-volume -S --size`.to_i
           end
           puts("Get_total: #{name}, #{capacity}")
           return capacity
@@ -57,6 +57,16 @@ module Pizaid
           synced = true
           puts("Is_sync: #{synced}")
           return synced
+        end
+      end
+      dbus_interface "com.pizaid.storage.Operations" do
+        dbus_method :Join, "in name:s, in device:s" do |device,name|
+          case name
+          when @names[0]
+            `#{@script_dir}/pizid-disk #{device}`
+          when @names[1]
+            `#{@script_dir}/pizid-disk -S #{device}`
+          end
         end
       end
     end
