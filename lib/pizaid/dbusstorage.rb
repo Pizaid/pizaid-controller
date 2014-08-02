@@ -60,12 +60,12 @@ module Pizaid
         end
       end
       dbus_interface "com.pizaid.storage.Operations" do
-        dbus_method :Join, "in name:s, in device:s" do |device,name|
+        dbus_method :Join, "in name:s, in device:s" do |name,device|
           case name
           when @names[0]
-            `#{@script_dir}/pizid-disk #{device}`
+            `#{@script_dir}/pizaid-disk #{device}`
           when @names[1]
-            `#{@script_dir}/pizid-disk -S #{device}`
+            `#{@script_dir}/pizaid-disk -S #{device}`
           end
         end
       end
