@@ -24,4 +24,6 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "thrift", "~>0.9.1"
   spec.add_runtime_dependency "rb-inotify"
+  spec.add_runtime_dependency "rack", "~>1.5.2"
+  spec.add_runtime_dependency "thin", "~>1.5.1"
 end
