@@ -1,33 +1,28 @@
-# -*- coding: utf-8 -*-
-require 'dbus'
 require 'socket'
 
 module Pizaid
   module Controller
-    class DBusNetwork < DBus::Object
-      dbus_interface "com.pizaid.network.Properties" do
-        # IPv4アドレス
-        dbus_method :Get_ipv4, "out str:s" do
+    class Network
+      def get_ipv4()
           Socket.getifaddrs.select {|x|
             x.name == "eth0" and x.addr.ipv4?
           }.first.addr.ip_address
-        end
-        # IPv6アドレス
-        dbus_method :Get_ipv6, "out str:s" do
+      end
+      def get_ipv6()
           Socket.getifaddrs.select {|x|
             x.name == "eth0" and x.addr.ipv6?
           }.first.addr.ip_address
-        end
-        dbus_method :Update_ipv4, "in ipstr:s, out result:b" do |ipstr|
-          return false if not validate_ipv4(ipstr)
-          rc = set_ipv4(ipstr)
+      end
+      def update_ipv4(newip)
+          return false if not validate_ipv4(newip)
+          rc = set_ipv4(newip)
           self.StatusUpdated()
           return rc
-        end
-        dbus_signal :StatusUpdated
       end
+
+      private
       def set_ipv4(str)
-        puts str
+        puts "set_ipv4: ", str
         return true
       end
       def validate_ipv4(str)
