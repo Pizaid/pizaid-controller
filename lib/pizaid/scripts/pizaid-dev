@@ -16,8 +16,8 @@ fi
 eval set -- "$OPT"
 while [ $# -gt 0 ]; do
     case $1 in
-        -S | --sync) MODE="SYNC";;
-        -U | --unused) MODE="UNUSED"
+        -S | --sync) MODE="SYNC" ;;
+        -U | --unused) MODE="UNUSED" ;;
         -h | --help) usage_exit ;;
         --) shift; break ;;
     esac
@@ -35,11 +35,14 @@ if [ $MODE == "MAIN" ] ; then
     pvs --noheadings -o pv_name,vg_name | grep 'Pizaid-VG' | awk '{print $1}' | sed 's/[0-9]$//g'
 elif [ $MODE == "SYNC" ] ; then
     pvs --noheadings -o pv_name,vg_name | grep 'Pizaid-Sync-VG' | awk '{print $1}' | sed 's/[0-9]$//g'
-elif [ $MODE == "UNUNSED" ] ; then
+elif [ $MODE == "UNUSED" ] ; then
     USED=`pvs --noheadings -o pv_name,vg_name | grep 'Pizaid' | awk '{print $1}' | sed 's/[0-9]$//g'`
-    ALL=`find /dev -name 'sd[a-z]'`
-    echo $USED'\n'$ALL | sort | uniq -u
-elif
+    for dev in `find /dev -name 'sd[a-z]'`; do
+        if [ -z "`echo $USED | grep $dev`" ]; then
+            echo $dev
+        fi
+    done
+else
     exit 2
 fi
 
