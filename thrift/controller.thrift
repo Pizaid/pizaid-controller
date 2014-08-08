@@ -5,7 +5,7 @@ service ControllerService {
      string network_get_ipv4(),
      string network_get_ipv6(),
      
-     string storage_names(),
+     list<string> storage_names(),
      i64 storage_capacity_kb(1: string key),
      i64 storage_usage_kb(1: string key),
      byte storage_usage_percent(1: string key),

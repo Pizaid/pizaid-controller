@@ -323,7 +323,7 @@ module Pizaid
       SUCCESS = 0
 
       FIELDS = {
-        SUCCESS => {:type => ::Thrift::Types::STRING, :name => 'success'}
+        SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRING}}
       }
 
       def struct_fields; FIELDS; end

@@ -25,7 +25,7 @@ if len(sys.argv) <= 1 or sys.argv[1] == '--help':
   print 'Functions:'
   print '  string network_get_ipv4()'
   print '  string network_get_ipv6()'
-  print '  string storage_names()'
+  print '   storage_names()'
   print '  i64 storage_capacity_kb(string key)'
   print '  i64 storage_usage_kb(string key)'
   print '  byte storage_usage_percent(string key)'
