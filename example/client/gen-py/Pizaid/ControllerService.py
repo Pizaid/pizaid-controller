@@ -740,7 +740,7 @@ class storage_names_result:
   """
 
   thrift_spec = (
-    (0, TType.STRING, 'success', None, None, ), # 0
+    (0, TType.LIST, 'success', (TType.STRING,None), None, ), # 0
   )
 
   def __init__(self, success=None,):
@@ -756,8 +756,13 @@ class storage_names_result:
       if ftype == TType.STOP:
         break
       if fid == 0:
-        if ftype == TType.STRING:
-          self.success = iprot.readString();
+        if ftype == TType.LIST:
+          self.success = []
+          (_etype3, _size0) = iprot.readListBegin()
+          for _i4 in xrange(_size0):
+            _elem5 = iprot.readString();
+            self.success.append(_elem5)
+          iprot.readListEnd()
         else:
           iprot.skip(ftype)
       else:
@@ -771,8 +776,11 @@ class storage_names_result:
       return
     oprot.writeStructBegin('storage_names_result')
     if self.success is not None:
-      oprot.writeFieldBegin('success', TType.STRING, 0)
-      oprot.writeString(self.success)
+      oprot.writeFieldBegin('success', TType.LIST, 0)
+      oprot.writeListBegin(TType.STRING, len(self.success))
+      for iter6 in self.success:
+        oprot.writeString(iter6)
+      oprot.writeListEnd()
       oprot.writeFieldEnd()
     oprot.writeFieldStop()
     oprot.writeStructEnd()
