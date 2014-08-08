@@ -15,7 +15,7 @@ module Pizaid
       end
       def get_capacity_kb(name)
         capacity = 0
-        target = @storage.find{ |storage| storage.name == name }
+        target = @storages.find{ |storage| storage.name == name }
         if target != nil
           capacity = `#{@script_dir}/pizaid-volume #{target.option} --size`.to_i
         end
@@ -24,7 +24,7 @@ module Pizaid
       end
       def get_usage_kb(name)
         used = 0
-        target = @storage.find{ |storage| storage.name == name }
+        target = @storages.find{ |storage| storage.name == name }
         if target != nil
           used = `#{@script_dir}/pizaid-volume #{target.option} --use`.to_i
         end
@@ -33,7 +33,7 @@ module Pizaid
       end
       def get_usage_percent(name)
         percent = 0
-        target = @storage.find{ |storage| storage.name == name }
+        target = @storages.find{ |storage| storage.name == name }
         if target != nil
           percent = `#{@script_dir}/pizaid-volume #{target.option} --use -p`.to_i
         end
@@ -47,7 +47,7 @@ module Pizaid
       end
       def join(name, device)
         rc = false
-        target = @storage.find{ |storage| storage.name == name }
+        target = @storages.find{ |storage| storage.name == name }
         if target != nil
           rc = system("#{@script_dir}/pizaid-disk #{target.option} #{device}")
         end
