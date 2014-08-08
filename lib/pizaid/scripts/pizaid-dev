@@ -1,0 +1,46 @@
+#! /bin/bash
+# output devs which is used for main/sync or not used
+
+usage_exit() {
+	echo "Usage: pizaid-dev [-S sync] [-U unused]" 1>&2
+    exit 1
+}
+
+. $(dirname $0)/pizaid-common.sh
+
+MODE="MAIN"
+OPT=`getopt -o :SUh -l sync,unused,help -- "$@"`
+if [ $? != 0 ] ; then
+    usage_exit
+fi
+eval set -- "$OPT"
+while [ $# -gt 0 ]; do
+    case $1 in
+        -S | --sync) MODE="SYNC";;
+        -U | --unused) MODE="UNUSED"
+        -h | --help) usage_exit ;;
+        --) shift; break ;;
+    esac
+    shift
+done
+
+if [ $# != 0 ] ; then
+    usage_exit
+fi
+
+PizaidCheckHostName
+PizaidCheckUser
+
+if [ $MODE == "MAIN" ] ; then
+    pvs --noheadings -o pv_name,vg_name | grep 'Pizaid-VG' | awk '{print $1}' | sed 's/[0-9]$//g'
+elif [ $MODE == "SYNC" ] ; then
+    pvs --noheadings -o pv_name,vg_name | grep 'Pizaid-Sync-VG' | awk '{print $1}' | sed 's/[0-9]$//g'
+elif [ $MODE == "UNUNSED" ] ; then
+    USED=`pvs --noheadings -o pv_name,vg_name | grep 'Pizaid' | awk '{print $1}' | sed 's/[0-9]$//g'`
+    ALL=`find /dev -name 'sd[a-z]'`
+    echo $USED'\n'$ALL | sort | uniq -u
+elif
+    exit 2
+fi
+
+exit 0
