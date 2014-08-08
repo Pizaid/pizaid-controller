@@ -3,9 +3,9 @@ module Pizaid
     class Storage
       def initialize
         storage = Struct::new('Storage', :name, :option, :devs)
-        @storages = [ storage.new(name: "main", option: "", devs: []),
-                      storage.new(name: "sync", option: "-S", devs: []),
-                      storage.new(name: "unused", option: "-U", devs: []) ]
+        @storages = [ storage.new("main","", []),
+                      storage.new("sync", "-S", []),
+                      storage.new("unused","-U", []) ]
         @script_dir = File.expand_path(File.dirname(__FILE__)) + "/scripts"
       end
       def get_names()
