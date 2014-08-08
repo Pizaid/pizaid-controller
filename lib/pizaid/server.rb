@@ -1,20 +1,20 @@
-require_relative 'dbusrunner.rb'
+# require_relative 'thrifthandler.rb'
+require_relative 'thriftrunner'
 
 module Pizaid
   module Controller
     class Server
       def initialize
-        @dbus = DBusRunner.new
+        @thrift = ThriftRunner.new
       end
       def run
-        th_dbus = Thread.new { @dbus.run }
-        th_dbus.run
+        th_thrift = Thread.new { @thrift.run }
+        th_thrift.run
         puts "=== Pizaid Controller ==="
         puts "Start running!"
         shell
         puts "Finalizing..."
-        @dbus.quit
-        th_dbus.join
+        th_thrift.kill
       end
       def shell
         while true
