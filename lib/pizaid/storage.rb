@@ -9,7 +9,7 @@ module Pizaid
         @script_dir = File.expand_path(File.dirname(__FILE__)) + "/scripts"
       end
       def get_names()
-        names = @storages.select { |storage| storage.name }
+        names = @storages.collect { |storage| storage.name }
         puts("get_names: #{names}")
         return names
       end
