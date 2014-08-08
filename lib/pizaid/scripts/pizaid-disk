@@ -16,7 +16,7 @@ fi
 eval set -- "$OPT"
 while [ $# -gt 0 ]; do
     case $1 in
-        -s | --sync) NAME="Pizaid-Sync";;
+        -S | --sync) NAME="Pizaid-Sync";;
         -h | --help) usage_exit ;;
         --) shift; break ;;
     esac
