@@ -48,12 +48,14 @@ module Pizaid
         return synced
       end
       def join(name, device)
+        rc = false
         case name
         when @names[0]
-          `#{@script_dir}/pizaid-disk #{device}`
+          rc = system("#{@script_dir}/pizaid-disk #{device}")
         when @names[1]
-          `#{@script_dir}/pizaid-disk -S #{device}`
+          rc = system("#{@script_dir}/pizaid-disk -S #{device}")
         end
+        return rc
       end
     end
   end
