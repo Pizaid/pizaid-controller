@@ -15,15 +15,18 @@ Quick Start
    ```
    git clone https://github.com/Pizaid/pizaid-controller.git
    cd pizaid-controller
-   ```   
+   ```
+   
 2. Install gems
    ```
    $ bundler install --path vender/bundler
    ```
+   
 3. Install controller
    ```
    $ rake install
    ```
+   
 4. Run server
    ```
    $ bundle exec example/simpleserver.rb
@@ -40,10 +43,12 @@ __Execute__
    ```
    $ sudo aptitude install python-pip
    ```
+   
 2. Install thrift library
    ```
    $ sudo pip install thrift
    ```
+   
 3. Run test client
    ```
    $ python example/client/sampleclient.py
