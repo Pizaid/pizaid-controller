@@ -69,6 +69,9 @@ module Pizaid
         end
         return devs
       end
+      def get_dev_id(device)
+        id = "DISK_ID"
+        return id
     end
   end
 end

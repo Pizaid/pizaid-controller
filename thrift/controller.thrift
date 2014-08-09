@@ -12,6 +12,7 @@ service ControllerService {
      bool storage_is_sync(),
      bool storage_join(1: string key, 2: string device),
      list<string> storage_devs(1: string key),
+     list<string> storage_dev_id(1: string device),
 
      byte power_battery_percent(),
      bool power_is_ac_plugin()

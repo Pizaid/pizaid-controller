@@ -32,6 +32,7 @@ if len(sys.argv) <= 1 or sys.argv[1] == '--help':
   print '  bool storage_is_sync()'
   print '  bool storage_join(string key, string device)'
   print '   storage_devs(string key)'
+  print '   storage_dev_id(string device)'
   print '  byte power_battery_percent()'
   print '  bool power_is_ac_plugin()'
   print ''
@@ -138,6 +139,12 @@ elif cmd == 'storage_devs':
     print 'storage_devs requires 1 args'
     sys.exit(1)
   pp.pprint(client.storage_devs(args[0],))
+
+elif cmd == 'storage_dev_id':
+  if len(args) != 1:
+    print 'storage_dev_id requires 1 args'
+    sys.exit(1)
+  pp.pprint(client.storage_dev_id(args[0],))
 
 elif cmd == 'power_battery_percent':
   if len(args) != 0:
