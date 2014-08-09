@@ -7,6 +7,7 @@ module Pizaid
                       storage.new("sync", "-S", []),
                       storage.new("unused","-U", []) ]
         @script_dir = File.expand_path(File.dirname(__FILE__)) + "/scripts"
+        update_devs
       end
       def get_names()
         names = @storages.collect { |storage| storage.name }
@@ -51,7 +52,22 @@ module Pizaid
         if target != nil
           rc = system("#{@script_dir}/pizaid-disk #{target.option} #{device}")
         end
+        update_devs
         return rc
+      end
+      def update_devs()
+        @storages.each{ |storage|
+          storage.devs = `#{@script_dir}/pizaid-dev #{storage.option}`.split
+        }
+        puts @storages
+      end
+      def get_devs(name)
+        devs = []
+        target = @storages.find{ |storage| storage.name == name }
+        if target != nil
+          devs = target.devs
+        end
+        return devs
       end
     end
   end

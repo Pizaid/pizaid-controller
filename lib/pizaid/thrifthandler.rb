@@ -36,6 +36,9 @@ module Pizaid
       def storage_join(key, device)
         @storage.join(key, device)
       end
+      def storage_devs(key)
+        @storage.get_devs(key)
+      end
 
       def power_battery_percent()
         @power.get_battery_percent()

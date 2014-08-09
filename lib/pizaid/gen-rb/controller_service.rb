@@ -132,6 +132,21 @@ module Pizaid
         raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'storage_join failed: unknown result')
       end
 
+      def storage_devs(key)
+        send_storage_devs(key)
+        return recv_storage_devs()
+      end
+
+      def send_storage_devs(key)
+        send_message('storage_devs', Storage_devs_args, :key => key)
+      end
+
+      def recv_storage_devs()
+        result = receive_message(Storage_devs_result)
+        return result.success unless result.success.nil?
+        raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'storage_devs failed: unknown result')
+      end
+
       def power_battery_percent()
         send_power_battery_percent()
         return recv_power_battery_percent()
@@ -221,6 +236,13 @@ module Pizaid
         result = Storage_join_result.new()
         result.success = @handler.storage_join(args.key, args.device)
         write_result(result, oprot, 'storage_join', seqid)
+      end
+
+      def process_storage_devs(seqid, iprot, oprot)
+        args = read_args(iprot, Storage_devs_args)
+        result = Storage_devs_result.new()
+        result.success = @handler.storage_devs(args.key)
+        write_result(result, oprot, 'storage_devs', seqid)
       end
 
       def process_power_battery_percent(seqid, iprot, oprot)
@@ -485,6 +507,38 @@ module Pizaid
 
       FIELDS = {
         SUCCESS => {:type => ::Thrift::Types::BOOL, :name => 'success'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class Storage_devs_args
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      KEY = 1
+
+      FIELDS = {
+        KEY => {:type => ::Thrift::Types::STRING, :name => 'key'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class Storage_devs_result
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      SUCCESS = 0
+
+      FIELDS = {
+        SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRING}}
       }
 
       def struct_fields; FIELDS; end
