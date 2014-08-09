@@ -18,7 +18,7 @@ module Pizaid
         @network.get_ipv6
       end
 
-      def storage_get_names()
+      def storage_names()
         @storage.get_names
       end
       def storage_capacity_kb(key)
