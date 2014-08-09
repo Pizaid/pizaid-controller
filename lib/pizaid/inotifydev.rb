@@ -11,6 +11,7 @@ module Pizaid
       def callbackfunc(event)
         if /^sd[a-z]$/ =~ event.name
           puts event.name
+          # send message to Pizaid.Controller.Storage
         end
       end
     end
