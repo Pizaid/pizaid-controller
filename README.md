@@ -29,7 +29,7 @@ Quick Start
    
 4. Run server
    ```
-   $ bundle exec example/simpleserver.rb
+   $ bundle exec ruby example/simpleserver.rb
    ```
 
 Execute a test client
