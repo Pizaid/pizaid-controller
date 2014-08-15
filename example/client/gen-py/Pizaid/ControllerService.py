@@ -73,6 +73,13 @@ class Iface:
     """
     pass
 
+  def storage_dev_size(self, device):
+    """
+    Parameters:
+     - device
+    """
+    pass
+
   def power_battery_percent(self):
     pass
 
@@ -369,6 +376,36 @@ class Client(Iface):
       return result.success
     raise TApplicationException(TApplicationException.MISSING_RESULT, "storage_dev_id failed: unknown result");
 
+  def storage_dev_size(self, device):
+    """
+    Parameters:
+     - device
+    """
+    self.send_storage_dev_size(device)
+    return self.recv_storage_dev_size()
+
+  def send_storage_dev_size(self, device):
+    self._oprot.writeMessageBegin('storage_dev_size', TMessageType.CALL, self._seqid)
+    args = storage_dev_size_args()
+    args.device = device
+    args.write(self._oprot)
+    self._oprot.writeMessageEnd()
+    self._oprot.trans.flush()
+
+  def recv_storage_dev_size(self):
+    (fname, mtype, rseqid) = self._iprot.readMessageBegin()
+    if mtype == TMessageType.EXCEPTION:
+      x = TApplicationException()
+      x.read(self._iprot)
+      self._iprot.readMessageEnd()
+      raise x
+    result = storage_dev_size_result()
+    result.read(self._iprot)
+    self._iprot.readMessageEnd()
+    if result.success is not None:
+      return result.success
+    raise TApplicationException(TApplicationException.MISSING_RESULT, "storage_dev_size failed: unknown result");
+
   def power_battery_percent(self):
     self.send_power_battery_percent()
     return self.recv_power_battery_percent()
@@ -434,6 +471,7 @@ class Processor(Iface, TProcessor):
     self._processMap["storage_join"] = Processor.process_storage_join
     self._processMap["storage_devs"] = Processor.process_storage_devs
     self._processMap["storage_dev_id"] = Processor.process_storage_dev_id
+    self._processMap["storage_dev_size"] = Processor.process_storage_dev_size
     self._processMap["power_battery_percent"] = Processor.process_power_battery_percent
     self._processMap["power_is_ac_plugin"] = Processor.process_power_is_ac_plugin
 
@@ -558,6 +596,17 @@ class Processor(Iface, TProcessor):
     result = storage_dev_id_result()
     result.success = self._handler.storage_dev_id(args.device)
     oprot.writeMessageBegin("storage_dev_id", TMessageType.REPLY, seqid)
+    result.write(oprot)
+    oprot.writeMessageEnd()
+    oprot.trans.flush()
+
+  def process_storage_dev_size(self, seqid, iprot, oprot):
+    args = storage_dev_size_args()
+    args.read(iprot)
+    iprot.readMessageEnd()
+    result = storage_dev_size_result()
+    result.success = self._handler.storage_dev_size(args.device)
+    oprot.writeMessageBegin("storage_dev_size", TMessageType.REPLY, seqid)
     result.write(oprot)
     oprot.writeMessageEnd()
     oprot.trans.flush()
@@ -1721,6 +1770,133 @@ class storage_dev_id_result:
       oprot.writeListBegin(TType.STRING, len(self.success))
       for iter20 in self.success:
         oprot.writeString(iter20)
+      oprot.writeListEnd()
+      oprot.writeFieldEnd()
+    oprot.writeFieldStop()
+    oprot.writeStructEnd()
+
+  def validate(self):
+    return
+
+
+  def __repr__(self):
+    L = ['%s=%r' % (key, value)
+      for key, value in self.__dict__.iteritems()]
+    return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+  def __eq__(self, other):
+    return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+  def __ne__(self, other):
+    return not (self == other)
+
+class storage_dev_size_args:
+  """
+  Attributes:
+   - device
+  """
+
+  thrift_spec = (
+    None, # 0
+    (1, TType.STRING, 'device', None, None, ), # 1
+  )
+
+  def __init__(self, device=None,):
+    self.device = device
+
+  def read(self, iprot):
+    if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
+      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec))
+      return
+    iprot.readStructBegin()
+    while True:
+      (fname, ftype, fid) = iprot.readFieldBegin()
+      if ftype == TType.STOP:
+        break
+      if fid == 1:
+        if ftype == TType.STRING:
+          self.device = iprot.readString();
+        else:
+          iprot.skip(ftype)
+      else:
+        iprot.skip(ftype)
+      iprot.readFieldEnd()
+    iprot.readStructEnd()
+
+  def write(self, oprot):
+    if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
+      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
+      return
+    oprot.writeStructBegin('storage_dev_size_args')
+    if self.device is not None:
+      oprot.writeFieldBegin('device', TType.STRING, 1)
+      oprot.writeString(self.device)
+      oprot.writeFieldEnd()
+    oprot.writeFieldStop()
+    oprot.writeStructEnd()
+
+  def validate(self):
+    return
+
+
+  def __repr__(self):
+    L = ['%s=%r' % (key, value)
+      for key, value in self.__dict__.iteritems()]
+    return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+  def __eq__(self, other):
+    return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+  def __ne__(self, other):
+    return not (self == other)
+
+class storage_dev_size_result:
+  """
+  Attributes:
+   - success
+  """
+
+  thrift_spec = (
+    (0, TType.LIST, 'success', (TType.STRING,None), None, ), # 0
+  )
+
+  def __init__(self, success=None,):
+    self.success = success
+
+  def read(self, iprot):
+    if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
+      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec))
+      return
+    iprot.readStructBegin()
+    while True:
+      (fname, ftype, fid) = iprot.readFieldBegin()
+      if ftype == TType.STOP:
+        break
+      if fid == 0:
+        if ftype == TType.LIST:
+          self.success = []
+          (_etype24, _size21) = iprot.readListBegin()
+          for _i25 in xrange(_size21):
+            _elem26 = iprot.readString();
+            self.success.append(_elem26)
+          iprot.readListEnd()
+        else:
+          iprot.skip(ftype)
+      else:
+        iprot.skip(ftype)
+      iprot.readFieldEnd()
+    iprot.readStructEnd()
+
+  def write(self, oprot):
+    if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
+      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
+      return
+    oprot.writeStructBegin('storage_dev_size_result')
+    if self.success is not None:
+      oprot.writeFieldBegin('success', TType.LIST, 0)
+      oprot.writeListBegin(TType.STRING, len(self.success))
+      for iter27 in self.success:
+        oprot.writeString(iter27)
       oprot.writeListEnd()
       oprot.writeFieldEnd()
     oprot.writeFieldStop()

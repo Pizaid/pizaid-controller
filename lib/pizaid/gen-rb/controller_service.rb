@@ -162,6 +162,21 @@ module Pizaid
         raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'storage_dev_id failed: unknown result')
       end
 
+      def storage_dev_size(device)
+        send_storage_dev_size(device)
+        return recv_storage_dev_size()
+      end
+
+      def send_storage_dev_size(device)
+        send_message('storage_dev_size', Storage_dev_size_args, :device => device)
+      end
+
+      def recv_storage_dev_size()
+        result = receive_message(Storage_dev_size_result)
+        return result.success unless result.success.nil?
+        raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'storage_dev_size failed: unknown result')
+      end
+
       def power_battery_percent()
         send_power_battery_percent()
         return recv_power_battery_percent()
@@ -265,6 +280,13 @@ module Pizaid
         result = Storage_dev_id_result.new()
         result.success = @handler.storage_dev_id(args.device)
         write_result(result, oprot, 'storage_dev_id', seqid)
+      end
+
+      def process_storage_dev_size(seqid, iprot, oprot)
+        args = read_args(iprot, Storage_dev_size_args)
+        result = Storage_dev_size_result.new()
+        result.success = @handler.storage_dev_size(args.device)
+        write_result(result, oprot, 'storage_dev_size', seqid)
       end
 
       def process_power_battery_percent(seqid, iprot, oprot)
@@ -588,6 +610,38 @@ module Pizaid
     end
 
     class Storage_dev_id_result
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      SUCCESS = 0
+
+      FIELDS = {
+        SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRING}}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class Storage_dev_size_args
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      DEVICE = 1
+
+      FIELDS = {
+        DEVICE => {:type => ::Thrift::Types::STRING, :name => 'device'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class Storage_dev_size_result
       include ::Thrift::Struct, ::Thrift::Struct_Union
       SUCCESS = 0
 

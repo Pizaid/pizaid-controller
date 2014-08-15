@@ -42,7 +42,10 @@ module Pizaid
       def storage_dev_id(device)
         @storage.get_dev_id(device)
       end
-
+      def strage_dev_size(device)
+        @storage.get_dev_size(device)
+      end
+      
       def power_battery_percent()
         @power.get_battery_percent()
       end
