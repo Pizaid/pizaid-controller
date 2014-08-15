@@ -70,8 +70,12 @@ module Pizaid
         return devs
       end
       def get_dev_id(device)
-        id = "DISK_ID"
+        id = `/lib/udev/ata_id #{device}`
         return id
+      end
+      def get_dev_size(device)
+        size =  `fdisk -l #{device} | grep Disk | awk '{ print $3$4}' | sed 's/,//g'`
+        return size
       end
     end
   end
