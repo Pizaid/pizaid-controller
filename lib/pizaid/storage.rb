@@ -70,11 +70,11 @@ module Pizaid
         return devs
       end
       def get_dev_id(device)
-        id = `/lib/udev/ata_id #{device}`
+        id = `udevadm info --name=#{device} --query=property  | grep 'ID_SERIAL=' | sed 's/ID_SERIAL=//g'`
         return id
       end
       def get_dev_size(device)
-        size =  `fdisk -l #{device} | grep Disk | awk '{ print $3$4}' | sed 's/,//g'`
+        size =  `fdisk -l #{device} | grep 'Disk'' | grep 'bytes'' |  awk '{ print $3$4}' | sed 's/,//g'`
         return size
       end
     end
