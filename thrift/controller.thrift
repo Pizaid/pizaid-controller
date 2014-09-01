@@ -14,7 +14,8 @@ service ControllerService {
      list<string> storage_devs(1: string key),
      list<string> storage_dev_id(1: string device),
      list<string> storage_dev_size(1: string device),
-     
+     list<string> storage_dev_port(1: string device),
+
      byte power_battery_percent(),
      bool power_is_ac_plugin()
 }

@@ -34,6 +34,7 @@ if len(sys.argv) <= 1 or sys.argv[1] == '--help':
   print '   storage_devs(string key)'
   print '   storage_dev_id(string device)'
   print '   storage_dev_size(string device)'
+  print '   storage_dev_port(string device)'
   print '  byte power_battery_percent()'
   print '  bool power_is_ac_plugin()'
   print ''
@@ -152,6 +153,12 @@ elif cmd == 'storage_dev_size':
     print 'storage_dev_size requires 1 args'
     sys.exit(1)
   pp.pprint(client.storage_dev_size(args[0],))
+
+elif cmd == 'storage_dev_port':
+  if len(args) != 1:
+    print 'storage_dev_port requires 1 args'
+    sys.exit(1)
+  pp.pprint(client.storage_dev_port(args[0],))
 
 elif cmd == 'power_battery_percent':
   if len(args) != 0:
