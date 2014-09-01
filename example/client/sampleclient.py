@@ -26,12 +26,14 @@ try:
     client = ControllerService.Client(protocol)
     transport.open()
 
-    print client.network_get_ipv4()
-    print client.storage_names()
+#    print client.network_get_ipv4()
+#    print client.storage_names()
 #    print client.storage_join("main", "/dev/sda")
-    print client.storage_capacity_kb("main")
-    print client.storage_usage_kb("main")
-    print client.storage_usage_percent("main")
+#    print client.storage_capacity_kb("main")
+#    print client.storage_usage_kb("main")
+#    print client.storage_usage_percent("main")
     print client.storage_devs("main")
+    print client.storage_dev_id("/dev/sda")
+
 except Thrift.TException, tx:
     print '%s' % (tx.message)
