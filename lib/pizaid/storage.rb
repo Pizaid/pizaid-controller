@@ -73,12 +73,12 @@ module Pizaid
       def get_dev_id(device)
         id = `udevadm info --name=#{device} --query=property  | grep 'ID_SERIAL=' | sed 's/ID_SERIAL=//g'`
         puts("get_dev_id: #{id}")
-        return id
+        return id.chomp
       end
       def get_dev_size(device)
         size = `fdisk -l #{device} | grep 'Disk' | grep 'bytes' |  awk '{ print $3$4}' | sed 's/,//g'`
         puts("get_dev_size: #{size}")
-        return size
+        return size.chomp
       end
       def get_dev_port(device)
         port = `udevadm info --name=#{device} --query=property  | grep 'ID_PATH=' | sed s'/ID_PATH=platform-bcm2708_usb-usb-0:1\.//g' | sed 's/:1\.0-scsi-0:0:0:0//g'`.to_i - 1
