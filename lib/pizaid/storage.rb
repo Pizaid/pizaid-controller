@@ -77,6 +77,10 @@ module Pizaid
         size =  `fdisk -l #{device} | grep 'Disk'' | grep 'bytes'' |  awk '{ print $3$4}' | sed 's/,//g'`
         return size
       end
+      def get_dev_port(device)
+        port = `udevadm info --name=#{device} --query=property  | grep 'ID_PATH=' | sed s'/ID_PATH=platform-bcm2708_usb-usb-0:1\.//g' | sed 's/:1\.0-scsi-0:0:0:0//g'`
+        return port
+      end
     end
   end
 end
