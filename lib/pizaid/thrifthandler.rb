@@ -42,7 +42,7 @@ module Pizaid
       def storage_dev_id(device)
         @storage.get_dev_id(device)
       end
-      def strage_dev_size(device)
+      def storage_dev_size(device)
         @storage.get_dev_size(device)
       end
       def storage_dev_port(device)

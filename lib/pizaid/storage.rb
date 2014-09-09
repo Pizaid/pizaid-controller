@@ -67,18 +67,22 @@ module Pizaid
         if target != nil
           devs = target.devs
         end
+        puts("get_devs: #{devs}")
         return devs
       end
       def get_dev_id(device)
         id = `udevadm info --name=#{device} --query=property  | grep 'ID_SERIAL=' | sed 's/ID_SERIAL=//g'`
+        puts("get_dev_id: #{id}")
         return id
       end
       def get_dev_size(device)
-        size =  `fdisk -l #{device} | grep 'Disk'' | grep 'bytes'' |  awk '{ print $3$4}' | sed 's/,//g'`
+        size = `fdisk -l #{device} | grep 'Disk' | grep 'bytes' |  awk '{ print $3$4}' | sed 's/,//g'`
+        puts("get_dev_size: #{size}")
         return size
       end
       def get_dev_port(device)
         port = `udevadm info --name=#{device} --query=property  | grep 'ID_PATH=' | sed s'/ID_PATH=platform-bcm2708_usb-usb-0:1\.//g' | sed 's/:1\.0-scsi-0:0:0:0//g'`
+        puts("get_dev_port: #{port}")
         return port
       end
     end
