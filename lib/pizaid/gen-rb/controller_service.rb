@@ -700,7 +700,7 @@ module Pizaid
       SUCCESS = 0
 
       FIELDS = {
-        SUCCESS => {:type => ::Thrift::Types::STRING, :name => 'success'}
+        SUCCESS => {:type => ::Thrift::Types::BYTE, :name => 'success'}
       }
 
       def struct_fields; FIELDS; end

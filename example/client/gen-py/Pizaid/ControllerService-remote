@@ -34,7 +34,7 @@ if len(sys.argv) <= 1 or sys.argv[1] == '--help':
   print '   storage_devs(string key)'
   print '  string storage_dev_id(string device)'
   print '  string storage_dev_size(string device)'
-  print '  string storage_dev_port(string device)'
+  print '  byte storage_dev_port(string device)'
   print '  byte power_battery_percent()'
   print '  bool power_is_ac_plugin()'
   print ''
