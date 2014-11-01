@@ -52,14 +52,13 @@ module Pizaid
         if target != nil
           rc = system("#{@script_dir}/pizaid-disk #{target.option} #{disk}")
         end
-        update_disks
+        updateDisks
         return rc
       end
       def updateDisks()
         @storageGroups.each{ |storageGroup|
           storageGroup.disks = `#{@script_dir}/pizaid-dev #{storageGroup.option}`.split
         }
-        puts @storageGroups
       end
       def diskList(storageGroupName)
         list = []
@@ -68,7 +67,7 @@ module Pizaid
           list = target.disks
         end
         puts("diskList: #{list}")
-        return disks
+        return list
       end
       def diskID(disk)
         id = `udevadm info --name=#{disk} --query=property  | grep 'ID_SERIAL=' | sed 's/ID_SERIAL=//g'`
