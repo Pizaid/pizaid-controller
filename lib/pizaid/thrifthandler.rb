@@ -10,50 +10,49 @@ module Pizaid
         @storage = Storage.new
         @power = Power.new
       end
-      def network_get_ipv4()
-        puts "network: #{@network.get_ipv4}"
-        @network.get_ipv4
+      def network_ipv4()
+        @network.ipv4
       end
-      def network_get_ipv6()
-        @network.get_ipv6
+      def network_ipv6()
+        @network.ipv6
       end
 
-      def storage_names()
-        @storage.get_names
+      def storage_storage_group_list()
+        @storage.storageGroupList
       end
       def storage_capacity_kb(key)
-        @storage.get_capacity_kb(key)
+        @storage.capacityKB(keyx)
       end
       def storage_usage_kb(key)
-        @storage.get_usage_kb(key)
+        @storage.usageKB(key)
       end
       def storage_usage_percent(key)
-        @storage.get_usage_percent(key)
+        @storage.usagePercent(key)
       end
       def storage_is_sync()
-        @storage.is_sync
+        @storage.isSync
       end
-      def storage_join(key, device)
-        @storage.join(key, device)
+      def storage_join(key, disk)
+        @storage.join(key, disk)
       end
-      def storage_devs(key)
-        @storage.get_devs(key)
+      def storage_disk_list(key)
+        @storage.diskList(key)
       end
-      def storage_dev_id(device)
-        @storage.get_dev_id(device)
+      def storage_disk_id(disk)
+        @storage.diskID(disk)
       end
-      def storage_dev_size(device)
-        @storage.get_dev_size(device)
+      def storage_disk_size(disk)
+        @storage.diskSize(disk)
       end
-      def storage_dev_port(device)
-        @storage.get_dev_port(device)
+      def storage_dev_port(disk)
+        @storage.diskPort(disk)
       end
       
       def power_battery_percent()
-        @power.get_battery_percent()
+        @power.batteryPercent()
       end
       def power_is_ac_plugin()
-        @power.is_ac_plugin()
+        @power.isACPlugin()
       end
     end
   end

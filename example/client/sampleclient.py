@@ -27,15 +27,15 @@ try:
     transport.open()
 
 #    print client.network_get_ipv4()
-#    print client.storage_names()
+#    print client.storage_storage_group_list()
 #    print client.storage_join("main", "/dev/sda")
 #    print client.storage_capacity_kb("main")
 #    print client.storage_usage_kb("main")
 #    print client.storage_usage_percent("main")
-    print client.storage_devs("unused")
-    print client.storage_dev_id("/dev/sda")
-    print client.storage_dev_port("/dev/sda")
-    print client.storage_dev_size("/dev/sda")
+    print client.storage_disk_list("unused")
+    print client.storage_disk_id("/disk/sda")
+    print client.storage_disk_port("/disk/sda")
+    print client.storage_disk_size("/disk/sda")
 
 except Thrift.TException, tx:
     print '%s' % (tx.message)

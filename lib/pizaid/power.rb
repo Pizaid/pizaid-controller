@@ -1,14 +1,14 @@
 module Pizaid
   module Controller
     class Power
-      def get_battery_percent()
+      def batteryPercent()
         percent = 50
-        puts("get_battery_percent: #{percent}")
+        puts("batteryPercent: #{percent}")
         return percent
       end
-      def is_ac_plugin()
+      def isACPlugin()
         plugged = true
-        puts("Is_ac_plugin: #{plugged}")
+        puts("isACPlugin: #{plugged}")
         return plugged
       end
     end

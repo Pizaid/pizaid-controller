@@ -2,87 +2,87 @@ module Pizaid
   module Controller
     class Storage
       def initialize
-        storage = Struct::new('Storage', :name, :option, :devs)
-        @storages = [ storage.new("main","", []),
-                      storage.new("sync", "-S", []),
-                      storage.new("unused","-U", []) ]
+        storageGroup = Struct::new('StorageGroup', :name, :option, :disks)
+        @storageGroups = [ storageGroup.new("main","", []),
+                          storageGroup.new("sync", "-S", []),
+                          storageGroup.new("unused","-U", []) ]
         @script_dir = File.expand_path(File.dirname(__FILE__)) + "/scripts"
-        update_devs
+        updateDisks
       end
-      def get_names()
-        names = @storages.collect { |storage| storage.name }
-        puts("get_names: #{names}")
-        return names
+      def storageGroupList()
+        list = @storageGroups.collect { |storageGroup| storageGroup.name }
+        puts("storageGroupList: #{list}")
+        return list
       end
-      def get_capacity_kb(name)
+      def capacityKB(storageGroupName)
         capacity = 0
-        target = @storages.find{ |storage| storage.name == name }
+        target = @storageGroups.find{ |storageGroup| storageGroup.name == storageGroupName }
         if target != nil
           capacity = `#{@script_dir}/pizaid-volume #{target.option} --size`.to_i
         end
-        puts("get_capacity_kb: #{name}, #{capacity}")
+        puts("capacityKB: #{storageGroupName}, #{capacity}")
         return capacity
       end
-      def get_usage_kb(name)
+      def usageKB(storageGroupName)
         used = 0
-        target = @storages.find{ |storage| storage.name == name }
+        target = @storageGroups.find{ |storageGroup| storageGroup.name == storageGroupName }
         if target != nil
           used = `#{@script_dir}/pizaid-volume #{target.option} --use`.to_i
         end
-        puts("Get_used: #{name}, #{used}")
+        puts("getUsageKB: #{storageGroupName}, #{used}")
         return used
       end
-      def get_usage_percent(name)
+      def usagePercent(storageGroupName)
         percent = 0
-        target = @storages.find{ |storage| storage.name == name }
+        target = @storageGroups.find{ |storageGroup| storageGroup.name == storageGroupName }
         if target != nil
           percent = `#{@script_dir}/pizaid-volume #{target.option} --use -p`.to_i
         end
-        puts("Get_usage: #{name}, #{percent}")
+        puts("usageParcent: #{storageGroupName}, #{percent}")
         return percent
       end
-      def is_sync()
+      def isSync()
         synced = true
-        puts("is_sync: #{synced}")
+        puts("isSync: #{synced}")
         return synced
       end
-      def join(name, device)
+      def join(storageGroupName, disk)
         rc = false
-        target = @storages.find{ |storage| storage.name == name }
+        target = @storageGroups.find{ |storageGroup| storageGroup.name == storageGroupName }
         if target != nil
-          rc = system("#{@script_dir}/pizaid-disk #{target.option} #{device}")
+          rc = system("#{@script_dir}/pizaid-disk #{target.option} #{disk}")
         end
-        update_devs
+        update_disks
         return rc
       end
-      def update_devs()
-        @storages.each{ |storage|
-          storage.devs = `#{@script_dir}/pizaid-dev #{storage.option}`.split
+      def updateDisks()
+        @storageGroups.each{ |storageGroup|
+          storageGroup.disks = `#{@script_dir}/pizaid-dev #{storageGroup.option}`.split
         }
-        puts @storages
+        puts @storageGroups
       end
-      def get_devs(name)
-        devs = []
-        target = @storages.find{ |storage| storage.name == name }
+      def diskList(storageGroupName)
+        list = []
+        target = @storageGroups.find{ |storageGroup| storageGroup.name == storageGroupName }
         if target != nil
-          devs = target.devs
+          list = target.disks
         end
-        puts("get_devs: #{devs}")
-        return devs
+        puts("diskList: #{list}")
+        return disks
       end
-      def get_dev_id(device)
-        id = `udevadm info --name=#{device} --query=property  | grep 'ID_SERIAL=' | sed 's/ID_SERIAL=//g'`
-        puts("get_dev_id: #{id}")
+      def diskID(disk)
+        id = `udevadm info --name=#{disk} --query=property  | grep 'ID_SERIAL=' | sed 's/ID_SERIAL=//g'`
+        puts("diskID: #{id}")
         return id.chomp
       end
-      def get_dev_size(device)
-        size = `fdisk -l #{device} | grep 'Disk' | grep 'bytes' |  awk '{ print $3$4}' | sed 's/,//g'`
-        puts("get_dev_size: #{size}")
+      def diskSize(disk)
+        size = `fdisk -l #{disk} | grep 'Disk' | grep 'bytes' |  awk '{ print $3$4}' | sed 's/,//g'`
+        puts("diskSize: #{size}")
         return size.chomp
       end
-      def get_dev_port(device)
-        port = `udevadm info --name=#{device} --query=property  | grep 'ID_PATH=' | sed s'/ID_PATH=platform-bcm2708_usb-usb-0:1\.//g' | sed 's/:1\.0-scsi-0:0:0:0//g'`.to_i - 1
-        puts("get_dev_port: #{port}")
+      def diskPort(disk)
+        port = `udevadm info --name=#{disk} --query=property  | grep 'ID_PATH=' | sed s'/ID_PATH=platform-bcm2708_usb-usb-0:1\.//g' | sed 's/:1\.0-scsi-0:0:0:0//g'`.to_i - 1
+        puts("diskPort: #{port}")
         return port
       end
     end
