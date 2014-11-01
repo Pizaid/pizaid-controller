@@ -33,9 +33,9 @@ try:
 #    print client.storage_usage_kb("main")
 #    print client.storage_usage_percent("main")
     print client.storage_disk_list("unused")
-    print client.storage_disk_id("/disk/sda")
-    print client.storage_disk_port("/disk/sda")
-    print client.storage_disk_size("/disk/sda")
+    print client.storage_disk_id("/dev/sda")
+    print client.storage_disk_port("/dev/sda")
+    print client.storage_disk_size("/dev/sda")
 
 except Thrift.TException, tx:
     print '%s' % (tx.message)
