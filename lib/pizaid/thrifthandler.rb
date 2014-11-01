@@ -21,7 +21,7 @@ module Pizaid
         @storage.storageGroupList
       end
       def storage_capacity_kb(key)
-        @storage.capacityKB(keyx)
+        @storage.capacityKB(key)
       end
       def storage_usage_kb(key)
         @storage.usageKB(key)
@@ -44,7 +44,7 @@ module Pizaid
       def storage_disk_size(disk)
         @storage.diskSize(disk)
       end
-      def storage_dev_port(disk)
+      def storage_disk_port(disk)
         @storage.diskPort(disk)
       end
       
