@@ -23,18 +23,18 @@ if len(sys.argv) <= 1 or sys.argv[1] == '--help':
   print 'Usage: ' + sys.argv[0] + ' [-h host[:port]] [-u url] [-f[ramed]] function [arg1 [arg2...]]'
   print ''
   print 'Functions:'
-  print '  string network_get_ipv4()'
-  print '  string network_get_ipv6()'
-  print '   storage_names()'
+  print '  string network_ipv4()'
+  print '  string network_ipv6()'
+  print '   storage_storage_group_list()'
   print '  i64 storage_capacity_kb(string key)'
   print '  i64 storage_usage_kb(string key)'
   print '  byte storage_usage_percent(string key)'
   print '  bool storage_is_sync()'
-  print '  bool storage_join(string key, string device)'
-  print '   storage_devs(string key)'
-  print '  string storage_dev_id(string device)'
-  print '  string storage_dev_size(string device)'
-  print '  byte storage_dev_port(string device)'
+  print '  bool storage_join(string key, string disk)'
+  print '   storage_disk_list(string key)'
+  print '  string storage_disk_id(string disk)'
+  print '  string storage_disk_size(string disk)'
+  print '  byte storage_disk_port(string disk)'
   print '  byte power_battery_percent()'
   print '  bool power_is_ac_plugin()'
   print ''
@@ -88,23 +88,23 @@ protocol = TBinaryProtocol.TBinaryProtocol(transport)
 client = ControllerService.Client(protocol)
 transport.open()
 
-if cmd == 'network_get_ipv4':
+if cmd == 'network_ipv4':
   if len(args) != 0:
-    print 'network_get_ipv4 requires 0 args'
+    print 'network_ipv4 requires 0 args'
     sys.exit(1)
-  pp.pprint(client.network_get_ipv4())
+  pp.pprint(client.network_ipv4())
 
-elif cmd == 'network_get_ipv6':
+elif cmd == 'network_ipv6':
   if len(args) != 0:
-    print 'network_get_ipv6 requires 0 args'
+    print 'network_ipv6 requires 0 args'
     sys.exit(1)
-  pp.pprint(client.network_get_ipv6())
+  pp.pprint(client.network_ipv6())
 
-elif cmd == 'storage_names':
+elif cmd == 'storage_storage_group_list':
   if len(args) != 0:
-    print 'storage_names requires 0 args'
+    print 'storage_storage_group_list requires 0 args'
     sys.exit(1)
-  pp.pprint(client.storage_names())
+  pp.pprint(client.storage_storage_group_list())
 
 elif cmd == 'storage_capacity_kb':
   if len(args) != 1:
@@ -136,29 +136,29 @@ elif cmd == 'storage_join':
     sys.exit(1)
   pp.pprint(client.storage_join(args[0],args[1],))
 
-elif cmd == 'storage_devs':
+elif cmd == 'storage_disk_list':
   if len(args) != 1:
-    print 'storage_devs requires 1 args'
+    print 'storage_disk_list requires 1 args'
     sys.exit(1)
-  pp.pprint(client.storage_devs(args[0],))
+  pp.pprint(client.storage_disk_list(args[0],))
 
-elif cmd == 'storage_dev_id':
+elif cmd == 'storage_disk_id':
   if len(args) != 1:
-    print 'storage_dev_id requires 1 args'
+    print 'storage_disk_id requires 1 args'
     sys.exit(1)
-  pp.pprint(client.storage_dev_id(args[0],))
+  pp.pprint(client.storage_disk_id(args[0],))
 
-elif cmd == 'storage_dev_size':
+elif cmd == 'storage_disk_size':
   if len(args) != 1:
-    print 'storage_dev_size requires 1 args'
+    print 'storage_disk_size requires 1 args'
     sys.exit(1)
-  pp.pprint(client.storage_dev_size(args[0],))
+  pp.pprint(client.storage_disk_size(args[0],))
 
-elif cmd == 'storage_dev_port':
+elif cmd == 'storage_disk_port':
   if len(args) != 1:
-    print 'storage_dev_port requires 1 args'
+    print 'storage_disk_port requires 1 args'
     sys.exit(1)
-  pp.pprint(client.storage_dev_port(args[0],))
+  pp.pprint(client.storage_disk_port(args[0],))
 
 elif cmd == 'power_battery_percent':
   if len(args) != 0:

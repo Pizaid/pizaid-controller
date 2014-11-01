@@ -12,49 +12,49 @@ module Pizaid
     class Client
       include ::Thrift::Client
 
-      def network_get_ipv4()
-        send_network_get_ipv4()
-        return recv_network_get_ipv4()
+      def network_ipv4()
+        send_network_ipv4()
+        return recv_network_ipv4()
       end
 
-      def send_network_get_ipv4()
-        send_message('network_get_ipv4', Network_get_ipv4_args)
+      def send_network_ipv4()
+        send_message('network_ipv4', Network_ipv4_args)
       end
 
-      def recv_network_get_ipv4()
-        result = receive_message(Network_get_ipv4_result)
+      def recv_network_ipv4()
+        result = receive_message(Network_ipv4_result)
         return result.success unless result.success.nil?
-        raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'network_get_ipv4 failed: unknown result')
+        raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'network_ipv4 failed: unknown result')
       end
 
-      def network_get_ipv6()
-        send_network_get_ipv6()
-        return recv_network_get_ipv6()
+      def network_ipv6()
+        send_network_ipv6()
+        return recv_network_ipv6()
       end
 
-      def send_network_get_ipv6()
-        send_message('network_get_ipv6', Network_get_ipv6_args)
+      def send_network_ipv6()
+        send_message('network_ipv6', Network_ipv6_args)
       end
 
-      def recv_network_get_ipv6()
-        result = receive_message(Network_get_ipv6_result)
+      def recv_network_ipv6()
+        result = receive_message(Network_ipv6_result)
         return result.success unless result.success.nil?
-        raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'network_get_ipv6 failed: unknown result')
+        raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'network_ipv6 failed: unknown result')
       end
 
-      def storage_names()
-        send_storage_names()
-        return recv_storage_names()
+      def storage_storage_group_list()
+        send_storage_storage_group_list()
+        return recv_storage_storage_group_list()
       end
 
-      def send_storage_names()
-        send_message('storage_names', Storage_names_args)
+      def send_storage_storage_group_list()
+        send_message('storage_storage_group_list', Storage_storage_group_list_args)
       end
 
-      def recv_storage_names()
-        result = receive_message(Storage_names_result)
+      def recv_storage_storage_group_list()
+        result = receive_message(Storage_storage_group_list_result)
         return result.success unless result.success.nil?
-        raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'storage_names failed: unknown result')
+        raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'storage_storage_group_list failed: unknown result')
       end
 
       def storage_capacity_kb(key)
@@ -117,13 +117,13 @@ module Pizaid
         raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'storage_is_sync failed: unknown result')
       end
 
-      def storage_join(key, device)
-        send_storage_join(key, device)
+      def storage_join(key, disk)
+        send_storage_join(key, disk)
         return recv_storage_join()
       end
 
-      def send_storage_join(key, device)
-        send_message('storage_join', Storage_join_args, :key => key, :device => device)
+      def send_storage_join(key, disk)
+        send_message('storage_join', Storage_join_args, :key => key, :disk => disk)
       end
 
       def recv_storage_join()
@@ -132,64 +132,64 @@ module Pizaid
         raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'storage_join failed: unknown result')
       end
 
-      def storage_devs(key)
-        send_storage_devs(key)
-        return recv_storage_devs()
+      def storage_disk_list(key)
+        send_storage_disk_list(key)
+        return recv_storage_disk_list()
       end
 
-      def send_storage_devs(key)
-        send_message('storage_devs', Storage_devs_args, :key => key)
+      def send_storage_disk_list(key)
+        send_message('storage_disk_list', Storage_disk_list_args, :key => key)
       end
 
-      def recv_storage_devs()
-        result = receive_message(Storage_devs_result)
+      def recv_storage_disk_list()
+        result = receive_message(Storage_disk_list_result)
         return result.success unless result.success.nil?
-        raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'storage_devs failed: unknown result')
+        raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'storage_disk_list failed: unknown result')
       end
 
-      def storage_dev_id(device)
-        send_storage_dev_id(device)
-        return recv_storage_dev_id()
+      def storage_disk_id(disk)
+        send_storage_disk_id(disk)
+        return recv_storage_disk_id()
       end
 
-      def send_storage_dev_id(device)
-        send_message('storage_dev_id', Storage_dev_id_args, :device => device)
+      def send_storage_disk_id(disk)
+        send_message('storage_disk_id', Storage_disk_id_args, :disk => disk)
       end
 
-      def recv_storage_dev_id()
-        result = receive_message(Storage_dev_id_result)
+      def recv_storage_disk_id()
+        result = receive_message(Storage_disk_id_result)
         return result.success unless result.success.nil?
-        raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'storage_dev_id failed: unknown result')
+        raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'storage_disk_id failed: unknown result')
       end
 
-      def storage_dev_size(device)
-        send_storage_dev_size(device)
-        return recv_storage_dev_size()
+      def storage_disk_size(disk)
+        send_storage_disk_size(disk)
+        return recv_storage_disk_size()
       end
 
-      def send_storage_dev_size(device)
-        send_message('storage_dev_size', Storage_dev_size_args, :device => device)
+      def send_storage_disk_size(disk)
+        send_message('storage_disk_size', Storage_disk_size_args, :disk => disk)
       end
 
-      def recv_storage_dev_size()
-        result = receive_message(Storage_dev_size_result)
+      def recv_storage_disk_size()
+        result = receive_message(Storage_disk_size_result)
         return result.success unless result.success.nil?
-        raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'storage_dev_size failed: unknown result')
+        raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'storage_disk_size failed: unknown result')
       end
 
-      def storage_dev_port(device)
-        send_storage_dev_port(device)
-        return recv_storage_dev_port()
+      def storage_disk_port(disk)
+        send_storage_disk_port(disk)
+        return recv_storage_disk_port()
       end
 
-      def send_storage_dev_port(device)
-        send_message('storage_dev_port', Storage_dev_port_args, :device => device)
+      def send_storage_disk_port(disk)
+        send_message('storage_disk_port', Storage_disk_port_args, :disk => disk)
       end
 
-      def recv_storage_dev_port()
-        result = receive_message(Storage_dev_port_result)
+      def recv_storage_disk_port()
+        result = receive_message(Storage_disk_port_result)
         return result.success unless result.success.nil?
-        raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'storage_dev_port failed: unknown result')
+        raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'storage_disk_port failed: unknown result')
       end
 
       def power_battery_percent()
@@ -227,25 +227,25 @@ module Pizaid
     class Processor
       include ::Thrift::Processor
 
-      def process_network_get_ipv4(seqid, iprot, oprot)
-        args = read_args(iprot, Network_get_ipv4_args)
-        result = Network_get_ipv4_result.new()
-        result.success = @handler.network_get_ipv4()
-        write_result(result, oprot, 'network_get_ipv4', seqid)
+      def process_network_ipv4(seqid, iprot, oprot)
+        args = read_args(iprot, Network_ipv4_args)
+        result = Network_ipv4_result.new()
+        result.success = @handler.network_ipv4()
+        write_result(result, oprot, 'network_ipv4', seqid)
       end
 
-      def process_network_get_ipv6(seqid, iprot, oprot)
-        args = read_args(iprot, Network_get_ipv6_args)
-        result = Network_get_ipv6_result.new()
-        result.success = @handler.network_get_ipv6()
-        write_result(result, oprot, 'network_get_ipv6', seqid)
+      def process_network_ipv6(seqid, iprot, oprot)
+        args = read_args(iprot, Network_ipv6_args)
+        result = Network_ipv6_result.new()
+        result.success = @handler.network_ipv6()
+        write_result(result, oprot, 'network_ipv6', seqid)
       end
 
-      def process_storage_names(seqid, iprot, oprot)
-        args = read_args(iprot, Storage_names_args)
-        result = Storage_names_result.new()
-        result.success = @handler.storage_names()
-        write_result(result, oprot, 'storage_names', seqid)
+      def process_storage_storage_group_list(seqid, iprot, oprot)
+        args = read_args(iprot, Storage_storage_group_list_args)
+        result = Storage_storage_group_list_result.new()
+        result.success = @handler.storage_storage_group_list()
+        write_result(result, oprot, 'storage_storage_group_list', seqid)
       end
 
       def process_storage_capacity_kb(seqid, iprot, oprot)
@@ -279,36 +279,36 @@ module Pizaid
       def process_storage_join(seqid, iprot, oprot)
         args = read_args(iprot, Storage_join_args)
         result = Storage_join_result.new()
-        result.success = @handler.storage_join(args.key, args.device)
+        result.success = @handler.storage_join(args.key, args.disk)
         write_result(result, oprot, 'storage_join', seqid)
       end
 
-      def process_storage_devs(seqid, iprot, oprot)
-        args = read_args(iprot, Storage_devs_args)
-        result = Storage_devs_result.new()
-        result.success = @handler.storage_devs(args.key)
-        write_result(result, oprot, 'storage_devs', seqid)
+      def process_storage_disk_list(seqid, iprot, oprot)
+        args = read_args(iprot, Storage_disk_list_args)
+        result = Storage_disk_list_result.new()
+        result.success = @handler.storage_disk_list(args.key)
+        write_result(result, oprot, 'storage_disk_list', seqid)
       end
 
-      def process_storage_dev_id(seqid, iprot, oprot)
-        args = read_args(iprot, Storage_dev_id_args)
-        result = Storage_dev_id_result.new()
-        result.success = @handler.storage_dev_id(args.device)
-        write_result(result, oprot, 'storage_dev_id', seqid)
+      def process_storage_disk_id(seqid, iprot, oprot)
+        args = read_args(iprot, Storage_disk_id_args)
+        result = Storage_disk_id_result.new()
+        result.success = @handler.storage_disk_id(args.disk)
+        write_result(result, oprot, 'storage_disk_id', seqid)
       end
 
-      def process_storage_dev_size(seqid, iprot, oprot)
-        args = read_args(iprot, Storage_dev_size_args)
-        result = Storage_dev_size_result.new()
-        result.success = @handler.storage_dev_size(args.device)
-        write_result(result, oprot, 'storage_dev_size', seqid)
+      def process_storage_disk_size(seqid, iprot, oprot)
+        args = read_args(iprot, Storage_disk_size_args)
+        result = Storage_disk_size_result.new()
+        result.success = @handler.storage_disk_size(args.disk)
+        write_result(result, oprot, 'storage_disk_size', seqid)
       end
 
-      def process_storage_dev_port(seqid, iprot, oprot)
-        args = read_args(iprot, Storage_dev_port_args)
-        result = Storage_dev_port_result.new()
-        result.success = @handler.storage_dev_port(args.device)
-        write_result(result, oprot, 'storage_dev_port', seqid)
+      def process_storage_disk_port(seqid, iprot, oprot)
+        args = read_args(iprot, Storage_disk_port_args)
+        result = Storage_disk_port_result.new()
+        result.success = @handler.storage_disk_port(args.disk)
+        write_result(result, oprot, 'storage_disk_port', seqid)
       end
 
       def process_power_battery_percent(seqid, iprot, oprot)
@@ -329,7 +329,7 @@ module Pizaid
 
     # HELPER FUNCTIONS AND STRUCTURES
 
-    class Network_get_ipv4_args
+    class Network_ipv4_args
       include ::Thrift::Struct, ::Thrift::Struct_Union
 
       FIELDS = {
@@ -344,38 +344,7 @@ module Pizaid
       ::Thrift::Struct.generate_accessors self
     end
 
-    class Network_get_ipv4_result
-      include ::Thrift::Struct, ::Thrift::Struct_Union
-      SUCCESS = 0
-
-      FIELDS = {
-        SUCCESS => {:type => ::Thrift::Types::STRING, :name => 'success'}
-      }
-
-      def struct_fields; FIELDS; end
-
-      def validate
-      end
-
-      ::Thrift::Struct.generate_accessors self
-    end
-
-    class Network_get_ipv6_args
-      include ::Thrift::Struct, ::Thrift::Struct_Union
-
-      FIELDS = {
-
-      }
-
-      def struct_fields; FIELDS; end
-
-      def validate
-      end
-
-      ::Thrift::Struct.generate_accessors self
-    end
-
-    class Network_get_ipv6_result
+    class Network_ipv4_result
       include ::Thrift::Struct, ::Thrift::Struct_Union
       SUCCESS = 0
 
@@ -391,7 +360,7 @@ module Pizaid
       ::Thrift::Struct.generate_accessors self
     end
 
-    class Storage_names_args
+    class Network_ipv6_args
       include ::Thrift::Struct, ::Thrift::Struct_Union
 
       FIELDS = {
@@ -406,7 +375,38 @@ module Pizaid
       ::Thrift::Struct.generate_accessors self
     end
 
-    class Storage_names_result
+    class Network_ipv6_result
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      SUCCESS = 0
+
+      FIELDS = {
+        SUCCESS => {:type => ::Thrift::Types::STRING, :name => 'success'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class Storage_storage_group_list_args
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+
+      FIELDS = {
+
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class Storage_storage_group_list_result
       include ::Thrift::Struct, ::Thrift::Struct_Union
       SUCCESS = 0
 
@@ -552,11 +552,11 @@ module Pizaid
     class Storage_join_args
       include ::Thrift::Struct, ::Thrift::Struct_Union
       KEY = 1
-      DEVICE = 2
+      DISK = 2
 
       FIELDS = {
         KEY => {:type => ::Thrift::Types::STRING, :name => 'key'},
-        DEVICE => {:type => ::Thrift::Types::STRING, :name => 'device'}
+        DISK => {:type => ::Thrift::Types::STRING, :name => 'disk'}
       }
 
       def struct_fields; FIELDS; end
@@ -583,7 +583,7 @@ module Pizaid
       ::Thrift::Struct.generate_accessors self
     end
 
-    class Storage_devs_args
+    class Storage_disk_list_args
       include ::Thrift::Struct, ::Thrift::Struct_Union
       KEY = 1
 
@@ -599,7 +599,7 @@ module Pizaid
       ::Thrift::Struct.generate_accessors self
     end
 
-    class Storage_devs_result
+    class Storage_disk_list_result
       include ::Thrift::Struct, ::Thrift::Struct_Union
       SUCCESS = 0
 
@@ -615,12 +615,12 @@ module Pizaid
       ::Thrift::Struct.generate_accessors self
     end
 
-    class Storage_dev_id_args
+    class Storage_disk_id_args
       include ::Thrift::Struct, ::Thrift::Struct_Union
-      DEVICE = 1
+      DISK = 1
 
       FIELDS = {
-        DEVICE => {:type => ::Thrift::Types::STRING, :name => 'device'}
+        DISK => {:type => ::Thrift::Types::STRING, :name => 'disk'}
       }
 
       def struct_fields; FIELDS; end
@@ -631,39 +631,7 @@ module Pizaid
       ::Thrift::Struct.generate_accessors self
     end
 
-    class Storage_dev_id_result
-      include ::Thrift::Struct, ::Thrift::Struct_Union
-      SUCCESS = 0
-
-      FIELDS = {
-        SUCCESS => {:type => ::Thrift::Types::STRING, :name => 'success'}
-      }
-
-      def struct_fields; FIELDS; end
-
-      def validate
-      end
-
-      ::Thrift::Struct.generate_accessors self
-    end
-
-    class Storage_dev_size_args
-      include ::Thrift::Struct, ::Thrift::Struct_Union
-      DEVICE = 1
-
-      FIELDS = {
-        DEVICE => {:type => ::Thrift::Types::STRING, :name => 'device'}
-      }
-
-      def struct_fields; FIELDS; end
-
-      def validate
-      end
-
-      ::Thrift::Struct.generate_accessors self
-    end
-
-    class Storage_dev_size_result
+    class Storage_disk_id_result
       include ::Thrift::Struct, ::Thrift::Struct_Union
       SUCCESS = 0
 
@@ -679,12 +647,12 @@ module Pizaid
       ::Thrift::Struct.generate_accessors self
     end
 
-    class Storage_dev_port_args
+    class Storage_disk_size_args
       include ::Thrift::Struct, ::Thrift::Struct_Union
-      DEVICE = 1
+      DISK = 1
 
       FIELDS = {
-        DEVICE => {:type => ::Thrift::Types::STRING, :name => 'device'}
+        DISK => {:type => ::Thrift::Types::STRING, :name => 'disk'}
       }
 
       def struct_fields; FIELDS; end
@@ -695,7 +663,39 @@ module Pizaid
       ::Thrift::Struct.generate_accessors self
     end
 
-    class Storage_dev_port_result
+    class Storage_disk_size_result
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      SUCCESS = 0
+
+      FIELDS = {
+        SUCCESS => {:type => ::Thrift::Types::STRING, :name => 'success'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class Storage_disk_port_args
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      DISK = 1
+
+      FIELDS = {
+        DISK => {:type => ::Thrift::Types::STRING, :name => 'disk'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class Storage_disk_port_result
       include ::Thrift::Struct, ::Thrift::Struct_Union
       SUCCESS = 0
 
