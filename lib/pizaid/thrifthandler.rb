@@ -4,7 +4,7 @@ require_relative 'power'
 
 module Pizaid
   module Controller
-    class ThriftHander
+    class ThriftHandler
       def initialize
         @network = Network.new
         @storage = Storage.new
