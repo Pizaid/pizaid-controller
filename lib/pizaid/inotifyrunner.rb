@@ -4,12 +4,9 @@ require_relative "inotifydev.rb"
 module Pizaid
   module Controller
     class InotifyRunner
-      def func2
-        puts "hoge2"
-      end
       def initialize
         @main = INotify::Notifier.new
-        InotifyDev.new(@main)
+        @inotifyDev = InotifyDev.new(@main)
       end
       def run
         @main.run
@@ -17,6 +14,7 @@ module Pizaid
       def 
         @main.quit
       end
+      attr_reader :inotifyDev
     end
   end
 end

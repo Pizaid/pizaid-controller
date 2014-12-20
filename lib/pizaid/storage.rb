@@ -59,6 +59,7 @@ module Pizaid
         @storageGroups.each{ |storageGroup|
           storageGroup.disks = `#{@script_dir}/pizaid-dev #{storageGroup.option}`.split
         }
+        puts "updateDisk"
       end
       def diskList(storageGroupName)
         list = []

@@ -54,6 +54,7 @@ module Pizaid
       def power_is_ac_plugin()
         @power.isACPlugin()
       end
+      attr_reader :storage
     end
   end
 end

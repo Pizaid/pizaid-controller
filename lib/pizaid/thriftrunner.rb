@@ -9,8 +9,8 @@ module Pizaid
   module Controller
     class ThriftRunner
       def initialize
-        handler = ThriftHandler.new
-        processor = ControllerService::Processor.new(handler)
+        @handler = ThriftHandler.new
+        processor = ControllerService::Processor.new(@handler)
         transport = Thrift::ServerSocket.new(9090)
         transportFactory = Thrift::BufferedTransportFactory.new
         @server = Thrift::SimpleServer.new(processor, transport, transportFactory)
@@ -20,6 +20,7 @@ module Pizaid
       end
       def quit
       end
+      attr_reader :handler
     end
   end
 end
