@@ -8,6 +8,7 @@ module Pizaid
       def initialize
         @thrift = ThriftRunner.new
         @inotify = InotifyRunner.new
+        @thrift.handler.storage.setStartSyncMethod( @inotify.inotifySync.method(:startSync))
         @inotify.inotifyDev.storageUpdateDiskMethod = @thrift.handler.storage.method(:updateDisks)
       end
       def run

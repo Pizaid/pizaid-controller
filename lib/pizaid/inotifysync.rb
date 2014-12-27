@@ -2,16 +2,25 @@ require 'rb-inotify'
 
 module Pizaid
   module Controller
-    class InotifySync < INotify::Watcher
+    class InotifySync
       def initialize(notifyer)
-        block = Proc.new{ |event| callBackMethod(event)}
-        watchEvents = [:attrib, :close_write, :create, :delete:, :move_from, :move_to]
-        super(notifyer, '/mnt/Pizaid', *watchEvents, &block)
+        @watcher = nil
       end
 
       def callBackMethod(event)
-        puts event.name
-        puts event.flags
+        options = "-a"
+        options += "c" if event.flags.include?(:attrib)
+        src = event.absolute_name
+        dest = File.dirname(src).gsub(/^\/mnt\/Pizaid/, '/mnt/Pizaid-Sync')
+        command = "rsync options \"#{src}\" \"#{dest}\""
+        puts command
+      end
+
+      def startSync
+        return if @watcher
+        block = Proc.new{ |event| callBackMethod(event)}
+        watchEvents = [:recursive, :attrib, :close_write, :create, :delete, :moved_from, :moved_to]
+        @watcher = notifyer.watch('/mnt/Pizaid', *watchEvents, &block)
       end
     end
   end

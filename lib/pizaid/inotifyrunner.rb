@@ -17,6 +17,7 @@ module Pizaid
         @main.quit
       end
       attr_reader :inotifyDev
+      attr_reader :inotifySync
     end
   end
 end

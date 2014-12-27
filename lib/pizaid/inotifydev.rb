@@ -2,19 +2,17 @@ require 'rb-inotify'
 
 module Pizaid
   module Controller
-    class InotifyDev < INotify::Watcher
+    class InotifyDev
       def initialize(notifyer)
+        @watcher = nil
         @storageUpdateDiskMethod = nil
         block = Proc.new{ |event| callBackMethod(event) }
-        super(notifyer, '/dev', :create, &block)
+        @watcher = notifyer.watch('/dev', :create, &block)
       end
 
       def callBackMethod(event)
         if /^sd[a-z]$/ =~ event.name
-          puts event.name
-          if @storageUpdateDiskMethod != nil
-            @storageUpdateDiskMethod.call
-          end
+          @storageUpdateDiskMethod.call if @storageUpdateDiskMethod
         end
       end
 

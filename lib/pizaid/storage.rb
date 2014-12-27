@@ -7,6 +7,7 @@ module Pizaid
                           storageGroup.new("sync", "-S", []),
                           storageGroup.new("unused","-U", []) ]
         @script_dir = File.expand_path(File.dirname(__FILE__)) + "/scripts"
+        @startSyncMethod = nil
         updateDisks
       end
       def storageGroupList()
@@ -59,6 +60,9 @@ module Pizaid
         @storageGroups.each{ |storageGroup|
           storageGroup.disks = `#{@script_dir}/pizaid-dev #{storageGroup.option}`.split
         }
+        unless @storageGroups.find{ |storageGroup| storageGroup.name=="sync"}.disk.empty?
+          @startSyncMethod if @startSyncMethod
+        end
         puts "updateDisk"
       end
       def diskList(storageGroupName)
@@ -84,6 +88,11 @@ module Pizaid
         port = `udevadm info --name=#{disk} --query=property  | grep 'ID_PATH=' | sed s'/ID_PATH=platform-bcm2708_usb-usb-0:1\.//g' | sed 's/:1\.0-scsi-0:0:0:0//g'`.to_i - 1
         puts("diskPort: #{port}")
         return port
+      end
+
+      def setStartSyncMethod(method)
+        @startSyncMethod = method
+        updateDisks
       end
     end
   end
