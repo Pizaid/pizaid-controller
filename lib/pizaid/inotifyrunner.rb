@@ -1,6 +1,5 @@
 require 'rb-inotify'
 require_relative "inotifydev.rb"
-require_relative "inotifysync.rb"
 
 module Pizaid
   module Controller
@@ -8,7 +7,6 @@ module Pizaid
       def initialize
         @main = INotify::Notifier.new
         @inotifyDev = InotifyDev.new(@main)
-        @inotifySync = InotifySync.new(@main)
       end
       def run
         @main.run

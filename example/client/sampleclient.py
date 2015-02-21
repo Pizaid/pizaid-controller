@@ -26,7 +26,7 @@ try:
     client = ControllerService.Client(protocol)
     transport.open()
 
-#    print client.network_get_ipv4()
+#    print client.network_ipv4()
 #    print client.storage_storage_group_list()
 #    print client.storage_join("main", "/dev/sda")
 #    print client.storage_capacity_kb("main")

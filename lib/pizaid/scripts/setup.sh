@@ -23,7 +23,7 @@ aptitude update
 aptitude upgrade
 
 # install packages
-aptitude install lvm2 samba xvfb
+aptitude install lvm2 samba xvfb lsyncd
 
 
 adduser share --home /mnt/Pizaid --no-create-home --disabled-password --disabled-login --system

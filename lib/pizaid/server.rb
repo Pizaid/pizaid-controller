@@ -1,6 +1,7 @@
 # require_relative 'thrifthandler.rb'
 require_relative 'thriftrunner'
-require_relative "inotifyrunner.rb"
+require_relative 'inotifyrunner'
+require_relative 'lsyncdrunner'
 
 module Pizaid
   module Controller
@@ -8,7 +9,8 @@ module Pizaid
       def initialize
         @thrift = ThriftRunner.new
         @inotify = InotifyRunner.new
-        @thrift.handler.storage.setStartSyncMethod( @inotify.inotifySync.method(:startSync))
+        @lsyncd = LsyncdRunner.new
+        @thrift.handler.storage.setStartSyncMethod( @lsyncd.method(:run))
         @inotify.inotifyDev.storageUpdateDiskMethod = @thrift.handler.storage.method(:updateDisks)
       end
       def run
@@ -21,8 +23,9 @@ module Pizaid
         shell
         puts "Finalizing..."
         @inotify.quit
+        @lsyncd.quit
         th_thrift.kill
-        th_inotfry.join
+        th_inotfy.kill
       end
       def shell
         while true
