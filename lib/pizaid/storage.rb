@@ -61,7 +61,7 @@ module Pizaid
           storageGroup.disks = `#{@script_dir}/pizaid-dev #{storageGroup.option}`.split
         }
         unless @storageGroups.find{ |storageGroup| storageGroup.name=="sync"}.disks.empty?
-          @startSyncMethod if @startSyncMethod
+          @startSyncMethod.call if @startSyncMethod
         end
         puts "updateDisk"
       end

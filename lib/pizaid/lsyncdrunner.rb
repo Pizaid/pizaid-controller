@@ -5,12 +5,13 @@ module Pizaid
         @pid = nil
       end
       def run
-        if !@pid
-          @pid = Process.spawn 'lsyncd -nodaemon -delay 1 -direct /mnt/Pizaid /mnt/Pizaid-sync'
+        unless @pid
+          @pid = Process.spawn 'lsyncd -nodaemon -delay 1 -direct /mnt/Pizaid /mnt/Pizaid-Sync'
+          puts "start lsyncd with pid "+@pid.to_s
         end
       end
       def quit
-        if !@pid
+        unless @pid
           Process.kill("TERM", @pid)
           @pid = nil
         end
