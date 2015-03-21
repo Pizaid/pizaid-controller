@@ -2,9 +2,9 @@
 # common funcs
 
 PizaidCheckHostName(){
-    if [ `hostname` != "raspberrypi" ]; then
-	    echo "This machine is not raspberrypi"
-	    exit 1
+    if [ "`grep Raspbian /etc/issue`" = "" ]; then
+        echo "This machine is not raspberrypi"
+        exit 1
     fi
 }
 

@@ -2,7 +2,7 @@
 # setupper for Pizaid-Controller
 
 # check machine
-if [ `hostname` != "raspberrypi" ]; then
+if [ "`grep Raspbian /etc/issue`" = "" ]; then
     echo "This machine is not raspberrypi"
     exit 1
 fi
